@@ -14,7 +14,7 @@ namespace FasterScanning
 
         public override string Author => "Dragon";
 
-        public override string Description => "Reduces enemy scan time to 1/4th of vanilla. Customizable, Host and piloting client must have.";
+        public override string Description => "Reduces enemy scan time to 15% of vanilla scan time. Customizable, host and piloting client must have.";
 
         static void HostVerifiedClient(object source, Events.PlayerEventArgs Player)
         {
