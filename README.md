@@ -4,10 +4,10 @@
 
 # FasterScanning
 
-Version 1.0.0  
+Version 1.0.1  
 For Game Version 0.25.2  
 Developed by Dragon  
-Requires VoidManager 1.0.5
+Requires VoidManager 1.0.6
 
 
 ---------------------
