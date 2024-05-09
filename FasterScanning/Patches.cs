@@ -52,24 +52,4 @@ namespace FasterScanning
             }
         }
     }
-
-    [HarmonyPatch(typeof(GameSessionManager), "HostGameSession")]
-    internal class ResetOnHostPatch
-    {
-        [HarmonyPrefix]
-        static void Patch()
-        {
-            BepinPlugin.UpdateActiveValue(BepinPlugin.Bindings.ScanTimeMultiplier.Value * BepinPlugin.Bindings.VanillaDefaultValue);
-        }
-    }
-    [HarmonyPatch(typeof(GameSessionManager), "JoinGameSession")]
-    internal class ResetOnJoinPatch
-    {
-        [HarmonyPrefix]
-        static void Patch()
-        {
-            BepinPlugin.UpdateActiveValue(BepinPlugin.Bindings.VanillaDefaultValue);
-        }
-    }
-    
 }

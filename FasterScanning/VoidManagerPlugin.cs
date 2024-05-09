@@ -1,4 +1,5 @@
-﻿using VoidManager;
+﻿using System;
+using VoidManager;
 using VoidManager.MPModChecks;
 
 namespace FasterScanning
@@ -8,6 +9,8 @@ namespace FasterScanning
         public VoidManagerPlugin()
         {
             Events.Instance.HostVerifiedClient += HostVerifiedClient;
+            Events.Instance.JoinedRoom += ClientJoinSession;
+            Events.Instance.HostStartSession += HostStartSession;
         }
 
         public override MultiplayerType MPType => MultiplayerType.Client;
@@ -22,6 +25,16 @@ namespace FasterScanning
             {
                 UpdateActiveScanTimeMessage.Instance.SendToPlayer(Player.player);
             }
+        }
+
+        static void ClientJoinSession(object source, EventArgs ea)
+        {
+            BepinPlugin.UpdateActiveValue(BepinPlugin.Bindings.VanillaDefaultValue);
+        }
+
+        static void HostStartSession(object source, EventArgs ea)
+        {
+            BepinPlugin.UpdateActiveValue(BepinPlugin.Bindings.ScanTimeMultiplier.Value * BepinPlugin.Bindings.VanillaDefaultValue);
         }
     }
 }
