@@ -13,7 +13,7 @@ namespace FasterScanning
             Events.Instance.HostStartSession += HostStartSession;
         }
 
-        public override MultiplayerType MPType => MultiplayerType.Client;
+        public override MultiplayerType MPType => MultiplayerType.Host;
 
         public override string Author => "Dragon";
 
