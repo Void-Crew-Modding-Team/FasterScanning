@@ -37,7 +37,7 @@ namespace FasterScanning
         }
     }
 
-    [HarmonyPatch(typeof(KeyBindVE), "Init", new Type[] { typeof(InputAction) })]
+    [HarmonyPatch(typeof(KeyBindVE), "Init", new Type[] { typeof(InputAction), typeof(bool) })]
     class UIPatch
     {
         internal static FieldInfo DurationFI = AccessTools.Field(typeof(KeyBindVE), "duration");
