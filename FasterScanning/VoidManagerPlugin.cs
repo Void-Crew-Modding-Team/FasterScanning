@@ -10,12 +10,11 @@ namespace FasterScanning
         {
             Events.Instance.HostVerifiedClient += HostVerifiedClient;
             Events.Instance.JoinedRoom += ClientJoinSession;
-            Events.Instance.HostStartSession += HostStartSession;
         }
 
         static void HostVerifiedClient(object source, Events.PlayerEventArgs Player)
         {
-            if (MPModCheckManager.Instance.NetworkedPeerHasMod(Player.player, MyPluginInfo.PLUGIN_GUID))
+            if (NetworkedPeerManager.Instance.NetworkedPeerHasMod(Player.player, MyPluginInfo.PLUGIN_GUID))
             {
                 UpdateActiveScanTimeMessage.Instance.SendToPlayer(Player.player);
             }
@@ -34,8 +33,23 @@ namespace FasterScanning
 
         public override string ThunderstoreID => MyPluginInfo.PLUGIN_THUNDERSTORE_ID;
 
+        public override SessionChangedReturn OnSessionChange(SessionChangedInput input)
         {
-            BepinPlugin.UpdateActiveValue(BepinPlugin.Bindings.ScanTimeMultiplier.Value * BepinPlugin.Bindings.VanillaDefaultValue);
+            switch(input.CallType)
+            {
+                case CallType.HostChange:
+                    if (input.IsHost)
+                    {
+                        BepinPlugin.UpdateActiveValue(BepinPlugin.Bindings.ScanTimeMultiplier.Value * BepinPlugin.Bindings.VanillaDefaultValue);
+                        UpdateActiveScanTimeMessage.Instance.SendToOthers();
+                    }
+                    break;
+                case CallType.HostStartSession:
+                    BepinPlugin.UpdateActiveValue(BepinPlugin.Bindings.ScanTimeMultiplier.Value * BepinPlugin.Bindings.VanillaDefaultValue);
+                    UpdateActiveScanTimeMessage.Instance.SendToOthers();
+                    break;
+            }
+            return new SessionChangedReturn() { SetMod_Session = true };
         }
     }
 }
