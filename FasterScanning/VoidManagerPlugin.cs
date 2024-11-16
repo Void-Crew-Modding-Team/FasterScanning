@@ -13,12 +13,6 @@ namespace FasterScanning
             Events.Instance.HostStartSession += HostStartSession;
         }
 
-        public override MultiplayerType MPType => MultiplayerType.Host;
-
-        public override string Author => "Dragon";
-
-        public override string Description => "Reduces enemy scan time to 15% of vanilla scan time. Customizable, host and piloting client must have.";
-
         static void HostVerifiedClient(object source, Events.PlayerEventArgs Player)
         {
             if (MPModCheckManager.Instance.NetworkedPeerHasMod(Player.player, MyPluginInfo.PLUGIN_GUID))
@@ -32,7 +26,14 @@ namespace FasterScanning
             BepinPlugin.UpdateActiveValue(BepinPlugin.Bindings.VanillaDefaultValue);
         }
 
-        static void HostStartSession(object source, EventArgs ea)
+        public override MultiplayerType MPType => MultiplayerType.Host;
+
+        public override string Author => MyPluginInfo.PLUGIN_AUTHORS;
+
+        public override string Description => MyPluginInfo.PLUGIN_DESCRIPTION;
+
+        public override string ThunderstoreID => MyPluginInfo.PLUGIN_THUNDERSTORE_ID;
+
         {
             BepinPlugin.UpdateActiveValue(BepinPlugin.Bindings.ScanTimeMultiplier.Value * BepinPlugin.Bindings.VanillaDefaultValue);
         }

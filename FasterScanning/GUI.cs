@@ -15,7 +15,7 @@ namespace FasterScanning
     {
         public override string Name()
         {
-            return $"Faster Scanning - {BepinPlugin.GetActiveValueForDisplay()}";
+            return $"{MyPluginInfo.USERS_PLUGIN_NAME} - {BepinPlugin.GetActiveValueForDisplay()}";
         }
 
         string ScanMultiplierString = string.Empty;
