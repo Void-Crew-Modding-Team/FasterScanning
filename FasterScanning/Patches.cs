@@ -1,6 +1,5 @@
 ﻿using Gameplay.TacticalTargeting;
 using HarmonyLib;
-using System;
 using System.Reflection;
 using UI.Core;
 using UnityEngine.InputSystem;
@@ -37,18 +36,18 @@ namespace FasterScanning
         }
     }
 
-    [HarmonyPatch(typeof(KeyBindVE), "Init", new Type[] { typeof(InputAction), typeof(bool) })]
+    [HarmonyPatch(typeof(KeyBindVE), "GetHoldDuration")]
     class UIPatch
     {
-        internal static FieldInfo DurationFI = AccessTools.Field(typeof(KeyBindVE), "duration");
+        internal static FieldInfo DurationFI = AccessTools.Field(typeof(KeyBindVE), "_duration");
         
-        static void Postfix(KeyBindVE __instance)
+        static void Postfix(KeyBindVE __instance, ref float __result)
         {
-            //Adjusts displayed hold time for completion and caches for later runtime changes.
-            if((float)DurationFI.GetValue(__instance) == BepinPlugin.Bindings.VanillaDefaultValue)
+            //Check if value is equivelant to vanilla and change. Nothing else uses a 2.5 second timer.
+            if(__result == BepinPlugin.Bindings.VanillaDefaultValue)
             {
                 KeybindDurationPatch.KeyBindVEInstance = __instance;
-                DurationFI.SetValue(__instance, BepinPlugin.Bindings.ActiveValue);
+                __result = BepinPlugin.Bindings.ActiveValue;
             }
         }
     }
